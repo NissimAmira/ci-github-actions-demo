@@ -9,6 +9,9 @@ on:
 jobs:
   run_unit_tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.7", "3.8", "3.9", "3.10"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,7 +19,8 @@ jobs:
       - name: Test
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: ${{ matrix.python }}
+          cache: pip
 
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
